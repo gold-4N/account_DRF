@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.urls import path,include
 from .views import *
+from rest_framework.routers import DefaultRouter
 
+router = DefaultRouter()
+router.register(r'transactions', TransactionViewSet, basename='transaction-list-create')
+# router.register(r'transactions/<int:pk>', TransactionViewSet, basename='transaction-detail')
+router.register(r'account',AccountView,basename='account')
 
 
 urlpatterns = [
-            path('transactions/', TransactionListCreateAPIView.as_view(), name='transaction-list-create'),
-            path('account/',AccountView.as_view(),name='account'),
-            path('transactions/<int:pk>/', TransactionDetailAPIView.as_view(), name='transaction-detail'),
+           path('',include(router.urls)),
   
 ]
